@@ -34,3 +34,14 @@ test_audio - Stems/
 
 # Local Config
 version_info.txt
+
+# Backend runtime
+backend/uploads/
+backend/outputs/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.expo/
+frontend/web-report/
+frontend/.dart_tool/
