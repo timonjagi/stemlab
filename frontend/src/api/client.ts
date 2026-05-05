@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { Job, CreateJobResponse, HealthResponse } from "../types";
+import { Platform } from "react-native";
 
 const API_BASE = __DEV__
   ? "http://100.94.82.99:7000"
@@ -15,7 +16,16 @@ export const uploadAndSeparate = async (
   exportMp3: boolean,
 ): Promise<CreateJobResponse> => {
   const formData = new FormData();
-  formData.append("file", file as any);
+
+  if (Platform.OS === "web") {
+    const response = await fetch(file.uri);
+    const blob = await response.blob();
+    const webFile = new File([blob], file.name, { type: file.type });
+    formData.append("file", webFile);
+  } else {
+    formData.append("file", file as any);
+  }
+
   formData.append("stem_count", String(stemCount));
   formData.append("quality", quality);
   formData.append("mode", mode);
